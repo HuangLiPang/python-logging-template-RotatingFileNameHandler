@@ -48,3 +48,30 @@ LOGGING = {
     }
 }
 ```
+
+[testLogger.py](./testLogger.py)
+```python
+import logging
+import logging.config
+import logging_config
+
+logging.config.dictConfig(logging_config.LOGGING)
+
+# create logger
+logger = logging.getLogger("testLogger")
+
+# "application" code
+logger.debug("debug message")
+logger.info("info message")
+logger.warn("warn message")
+logger.error("error message")
+logger.critical("critical message")
+```
+
+testLogger.py output
+```
+2018-06-27 03:58:15 PM - PID: 68496 - INFO - testLogger.py - info message
+2018-06-27 03:58:15 PM - PID: 68496 - WARNING - testLogger.py - warn message
+2018-06-27 03:58:15 PM - PID: 68496 - ERROR - testLogger.py - error message
+2018-06-27 03:58:15 PM - PID: 68496 - CRITICAL - testLogger.py - critical message
+```
