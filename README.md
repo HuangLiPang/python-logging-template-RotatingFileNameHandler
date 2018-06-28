@@ -4,9 +4,8 @@ Python logging template using dictConfig
 
 Reference
 ---
-[logging config](https://docs.python.org/2/library/logging.config.html)
-
-[logging handlers](https://docs.python.org/2/library/logging.handlers.html)
+- [logging config](https://docs.python.org/2/library/logging.config.html)
+- [logging handlers](https://docs.python.org/2/library/logging.handlers.html)
 
 Configuration
 ---
