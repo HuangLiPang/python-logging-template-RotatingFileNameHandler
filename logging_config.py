@@ -15,6 +15,26 @@ import time
 class UTCFormatter(logging.Formatter):
     converter = time.gmtime
 
+
+class RotatingFileNameHandler(logging.handlers.RotatingFileHandler):
+    def __init__(self, filename, logPath):
+
+        # set format type
+        formatter = logging.Formatter(fmt="%(asctime)s - PID: %(process)d"\
+                                        " - %(levelname)s - %(filename)s - %(message)s",
+                                      datefmt="%Y-%m-%d %I:%M:%S %p")
+
+        # set filename by the name of scripts
+        logPath = logPath + "/" + filename.split('.')[0] + ".log"
+
+        # please set the maxBytes by yourself
+        # it will backup three files and delete the oldest one when create a new one
+        super(RotatingFileNameHandler, self).__init__(filename=logPath, maxBytes=1024, backupCount=3)
+        super(RotatingFileNameHandler, self).setFormatter(fmt=formatter)
+
+        # NOTSET, DEBUG, INFO, WARNING, ERROR, CRITICAL
+        super(RotatingFileNameHandler, self).setLevel(logging.INFO)
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -42,35 +62,11 @@ LOGGING = {
             "level": "INFO",
             "formatter": "complete",
             "class": "logging.StreamHandler"
-        },
-        # FileHandler will store log in file
-        # "file": { 
-        #     "level": "INFO",
-        #     "formatter": "complete",
-        #     "class": "logging.FileHandler",
-        #     "filename": datetime.datetime.now().strftime("%Y-%m-%d.log")
-        # },
-
-        # RotatingFileHandler will rotate the file automatically.
-        # For example, 
-        # backupCount = 5, filename = "app.log"
-        # output => app.log, app.log.1, app.log.2, up to app.log.5. 
-        # The file being written to is always app.log. When this file is filled, 
-        # it is closed and renamed to app.log.1, and if files app.log.1, app.log.2, etc. exist, 
-        # then they are renamed to app.log.2, app.log.3 etc. respectively.
-        "rotating": { 
-            "level": "INFO",
-            "formatter": "complete",
-            "class": "logging.handlers.RotatingFileHandler",
-            # need an absolute path for log file
-            "filename": "example.log",
-            "maxBytes": 1024,
-            "backupCount": 3
         }
     },
     # root logger
     "root": {
-        "handlers": ["default", "rotating"],
+        "handlers": ["default"],
         "level": "INFO",
         "propagate": True
     }
