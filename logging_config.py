@@ -3,7 +3,7 @@
 """
 Created on 2018 Jun.
 
-@author: huanglipang
+@author: HuangLiPang, QuenLo 
 
 logging config doc:
 https://docs.python.org/2/library/logging.config.html
@@ -19,7 +19,9 @@ class UTCFormatter(logging.Formatter):
 class RotatingFileNameHandler(logging.handlers.RotatingFileHandler):
     def __init__(self, filename, logPath):
 
-        # set format type
+        # set formatter to format type
+        # LogRecord attributes doc
+        # https://docs.python.org/2/library/logging.html#logrecord-attributes
         formatter = logging.Formatter(fmt="%(asctime)s - PID: %(process)d"\
                                         " - %(levelname)s - %(filename)s - %(message)s",
                                       datefmt="%Y-%m-%d %I:%M:%S %p")
@@ -27,12 +29,15 @@ class RotatingFileNameHandler(logging.handlers.RotatingFileHandler):
         # set filename by the name of scripts
         logPath = logPath + "/" + filename.split('.')[0] + ".log"
 
-        # please set the maxBytes by yourself
+        # please set the maxBytes and backupCount by yourself
         # it will backup three files and delete the oldest one when create a new one
+        # the latest log will always store in filename.log
         super(RotatingFileNameHandler, self).__init__(filename=logPath, maxBytes=1024, backupCount=3)
         super(RotatingFileNameHandler, self).setFormatter(fmt=formatter)
 
         # NOTSET, DEBUG, INFO, WARNING, ERROR, CRITICAL
+        # logging levels doc
+        # https://docs.python.org/2/howto/logging.html#logging-levels
         super(RotatingFileNameHandler, self).setLevel(logging.INFO)
 
 LOGGING = {
@@ -67,6 +72,7 @@ LOGGING = {
     # root logger
     "root": {
         "handlers": ["default"],
+        # default level is "WARNING"
         "level": "INFO",
         "propagate": True
     }

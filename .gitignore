@@ -1,0 +1,9 @@
+# Mac files
+.DS_Store
+
+# demo data
+*.log
+
+# config data
+.python-version
+*.pyc

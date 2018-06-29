@@ -3,10 +3,12 @@ import logging.config
 import logging_config
 from logging_config import RotatingFileNameHandler
 
+# load config file
 logging.config.dictConfig(logging_config.LOGGING)
 
 # create logger
 logger = logging.getLogger()
+# RotatingFileNameHandler(filename, logPath)
 logger.addHandler(RotatingFileNameHandler(__file__, "./log"))
 
 # "application" code
