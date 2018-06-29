@@ -1,11 +1,13 @@
 import logging
 import logging.config
 import logging_config
+from logging_config import RotatingFileNameHandler
 
 logging.config.dictConfig(logging_config.LOGGING)
 
 # create logger
-logger = logging.getLogger("testLogger")
+logger = logging.getLogger()
+logger.addHandler(RotatingFileNameHandler(__file__, "./log"))
 
 # "application" code
 logger.debug("debug message")
