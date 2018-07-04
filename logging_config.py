@@ -11,6 +11,8 @@ https://docs.python.org/2/library/logging.config.html
 import logging
 import datetime
 import time
+import os
+import sys
 
 class UTCFormatter(logging.Formatter):
     converter = time.gmtime
@@ -25,7 +27,16 @@ class RotatingFileNameHandler(logging.handlers.RotatingFileHandler):
         formatter = logging.Formatter(fmt="%(asctime)s - PID: %(process)d"\
                                         " - %(levelname)s - %(filename)s - %(message)s",
                                       datefmt="%Y-%m-%d %I:%M:%S %p")
-
+        # check if log path exists
+        if not os.path.isdir(logPath):
+            try:
+                os.mkdir(logPath)
+                # only show on console
+                logging.info("create directory %s" % logPath)
+            except Exception as err:
+                # only show on console
+                logging.error(err)
+                sys.exit(0)
         # set filename by the name of scripts
         logPath = logPath + "/" + filename.replace(".py", '') + ".log"
 
