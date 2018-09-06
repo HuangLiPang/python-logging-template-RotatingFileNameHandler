@@ -1,6 +1,6 @@
 python-logging-template using RotatingFileNameHandler
 ---
-Python logging template using dictConfig
+Python logging config by using dictConfig
 
 Reference
 ---
